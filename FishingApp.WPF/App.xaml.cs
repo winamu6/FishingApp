@@ -5,6 +5,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using FishingApp.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using FishingApp.Core.Repoitories.UserRepositories.IUserRepositories;
+using FishingApp.Core.Repoitories.UserRepositories;
+using FishingApp.Core.Services.AuthServices.IAuthServices;
+using FishingApp.Core.Services.AuthServices;
+using System.Runtime.InteropServices.JavaScript;
 
 namespace FishingApp.WPF
 {
@@ -27,10 +32,16 @@ namespace FishingApp.WPF
                     services.AddDbContext<FishingDbContext>(options =>
                         options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
 
-                    services.AddSingleton<MainWindow>();
 
+                    services.AddScoped<IUserRepository, UserRepository>();
+
+
+                    services.AddScoped<IAuthService, AuthService>();
+
+
+                    services.AddSingleton<MainWindow>();
                 })
-                .Build();
+            .Build();
 
             _host.Start();
 
