@@ -1,4 +1,6 @@
 ﻿using FishingApp.Core.Services.AuthServices.IAuthServices;
+using FishingApp.WPF.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,6 +33,9 @@ namespace FishingApp.WPF
             if (user != null)
             {
                 MessageBox.Show($"Добро пожаловать, {user.Name}!\nВаш счёт: {user.Score}", "Успешный вход");
+                var fishDexWindow = App.Services.GetRequiredService<FishDexWindow>();
+                fishDexWindow.Show();
+                this.Close();
             }
             else
             {
@@ -47,6 +52,9 @@ namespace FishingApp.WPF
             if (success)
             {
                 MessageBox.Show("Регистрация прошла успешно!", "Успех");
+                var fishDexWindow = App.Services.GetRequiredService<FishDexWindow>();
+                fishDexWindow.Show();
+                this.Close();
             }
             else
             {

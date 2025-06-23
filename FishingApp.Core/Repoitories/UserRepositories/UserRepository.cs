@@ -34,5 +34,12 @@ namespace FishingApp.Core.Repoitories.UserRepositories
         {
             return await _context.Users.AnyAsync(u => u.Name == name);
         }
+        public async Task<List<User>> GetAllByScoreAsync()
+        {
+            return await _context.Users
+                .OrderByDescending(u => u.Score)
+                .ToListAsync();
+        }
+
     }
 }

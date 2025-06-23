@@ -10,6 +10,11 @@ using FishingApp.Core.Repoitories.UserRepositories;
 using FishingApp.Core.Services.AuthServices.IAuthServices;
 using FishingApp.Core.Services.AuthServices;
 using System.Runtime.InteropServices.JavaScript;
+using FishingApp.Core.Repositories.Interfaces;
+using FishingApp.Core.Repositories.Implementations;
+using FishingApp.Core.Services.FishServices.Interfaces;
+using FishingApp.Core.Services.FishServices;
+using FishingApp.WPF.Windows;
 
 namespace FishingApp.WPF
 {
@@ -34,12 +39,14 @@ namespace FishingApp.WPF
 
 
                     services.AddScoped<IUserRepository, UserRepository>();
+                    services.AddScoped<IFishRepository, FishRepository>();
 
 
                     services.AddScoped<IAuthService, AuthService>();
-
+                    services.AddScoped<IFishService, FishService>();
 
                     services.AddSingleton<MainWindow>();
+                    services.AddTransient<FishDexWindow>();
                 })
             .Build();
 
