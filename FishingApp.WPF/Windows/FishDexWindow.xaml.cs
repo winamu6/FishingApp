@@ -1,4 +1,5 @@
-﻿using FishingApp.Core.Services.FishServices.Interfaces;
+﻿using FishingApp.Core.Services.FishingServices.IFishingServices;
+using FishingApp.Core.Services.FishServices.Interfaces;
 using FishingApp.Core.Services.UserServices.Interfaces;
 using FishingApp.Data.Models.Entities;
 using System;
@@ -21,19 +22,54 @@ namespace FishingApp.WPF.Windows
     {
         private readonly IFishService _fishService;
         private readonly IUserService _userService;
+        private readonly IFishingService _fishingService;
 
-        public FishDexWindow(IFishService fishService, IUserService userService)
+        private readonly User _currentUser;
+        private List<Fish> _currentCatch = new();
+
+        public FishDexWindow(IFishService fishService, IUserService userService, IFishingService fishingService, User currentUser)
         {
             InitializeComponent();
+
             _fishService = fishService;
             _userService = userService;
+            _fishingService = fishingService;
+            _currentUser = currentUser;
 
             Loaded += FishDexWindow_Loaded;
         }
 
         private async void FishDexWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            await LoadFish();
+            var fishList = await _fishService.GetAllFishAsync();
+            FishComboBox.ItemsSource = fishList;
+
+            await LoadUsers();
+        }
+
+        private void AddFishToCatch_Click(object sender, RoutedEventArgs e)
+        {
+            if (FishComboBox.SelectedItem is Fish fish)
+            {
+                _currentCatch.Add(fish);
+                CatchListBox.Items.Add(fish);
+            }
+        }
+
+        private async void SaveFishing_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentCatch.Count == 0)
+            {
+                MessageBox.Show("Добавьте хотя бы одну рыбу.");
+                return;
+            }
+
+            await _fishingService.SaveFishingAsync(_currentUser, _currentCatch);
+
+            MessageBox.Show("Рыбалка сохранена! Очки начислены.");
+
+            _currentCatch.Clear();
+            CatchListBox.Items.Clear();
             await LoadUsers();
         }
 

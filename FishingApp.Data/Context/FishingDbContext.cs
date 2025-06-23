@@ -27,11 +27,6 @@ namespace FishingApp.Data.Context
                 .WithOne(f => f.User)
                 .HasForeignKey(f => f.UserId);
 
-            modelBuilder.Entity<Fishing>()
-                .HasMany(f => f.Fishes)
-                .WithOne(fh => fh.Fishing)
-                .HasForeignKey(fh => fh.FishingId);
-
             modelBuilder.Entity<Fish>()
                 .HasOne(f => f.Discription)
                 .WithOne(d => d.Fish)

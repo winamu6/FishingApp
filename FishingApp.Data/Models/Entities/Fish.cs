@@ -10,10 +10,6 @@ namespace FishingApp.Data.Models.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
-
-        public int FishingId { get; set; }
-        public Fishing Fishing { get; set; } = null!;
-
         public Discription Discription { get; set; } = null!;
     }
 }

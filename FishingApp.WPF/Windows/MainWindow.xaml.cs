@@ -1,4 +1,7 @@
 ﻿using FishingApp.Core.Services.AuthServices.IAuthServices;
+using FishingApp.Core.Services.FishingServices.IFishingServices;
+using FishingApp.Core.Services.FishServices.Interfaces;
+using FishingApp.Core.Services.UserServices.Interfaces;
 using FishingApp.WPF.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
@@ -33,10 +36,16 @@ namespace FishingApp.WPF
             if (user != null)
             {
                 MessageBox.Show($"Добро пожаловать, {user.Name}!\nВаш счёт: {user.Score}", "Успешный вход");
-                var fishDexWindow = App.Services.GetRequiredService<FishDexWindow>();
+
+                var fishService = App.Services.GetRequiredService<IFishService>();
+                var userService = App.Services.GetRequiredService<IUserService>();
+                var fishingService = App.Services.GetRequiredService<IFishingService>();
+
+                var fishDexWindow = new FishDexWindow(fishService, userService, fishingService, user);
                 fishDexWindow.Show();
                 this.Close();
             }
+
             else
             {
                 MessageBox.Show("Неверное имя пользователя или пароль.", "Ошибка входа");

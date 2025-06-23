@@ -13,5 +13,7 @@ namespace FishingApp.Core.Repoitories.UserRepositories.IUserRepositories
         Task AddUserAsync(User user);
         Task<bool> UserExistsAsync(string name);
         Task<List<User>> GetAllByScoreAsync();
+        Task UpdateUserAsync(User user);
+
     }
 }

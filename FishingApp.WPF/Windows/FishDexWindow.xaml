@@ -30,6 +30,27 @@
                     </ListView.View>
                 </ListView>
             </TabItem>
+
+            <TabItem Header="Добавить улов">
+                <StackPanel Margin="10">
+
+                    <ComboBox x:Name="FishComboBox"
+                      DisplayMemberPath="Name"
+                      Width="200" Height="30" />
+
+                    <Button Content="Добавить в улов"
+                    Click="AddFishToCatch_Click"
+                    Margin="0,5" Width="150" />
+
+                    <ListBox x:Name="CatchListBox"
+                     DisplayMemberPath="Name"
+                     Height="100" />
+
+                    <Button Content="Сохранить рыбалку"
+                    Click="SaveFishing_Click"
+                    Margin="0,10" Width="200" />
+                </StackPanel>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>
