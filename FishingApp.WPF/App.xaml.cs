@@ -1,20 +1,22 @@
-﻿using System;
-using System.Windows;
+﻿using FishingApp.Core.Repoitories.UserRepositories;
+using FishingApp.Core.Repoitories.UserRepositories.IUserRepositories;
+using FishingApp.Core.Repositories.Implementations;
+using FishingApp.Core.Repositories.Interfaces;
+using FishingApp.Core.Services.AuthServices;
+using FishingApp.Core.Services.AuthServices.IAuthServices;
+using FishingApp.Core.Services.FishServices;
+using FishingApp.Core.Services.FishServices.Interfaces;
+using FishingApp.Core.Services.UserServices.Implementations;
+using FishingApp.Core.Services.UserServices.Interfaces;
+using FishingApp.Data.Context;
+using FishingApp.WPF.Windows;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-using FishingApp.Data.Context;
-using Microsoft.EntityFrameworkCore;
-using FishingApp.Core.Repoitories.UserRepositories.IUserRepositories;
-using FishingApp.Core.Repoitories.UserRepositories;
-using FishingApp.Core.Services.AuthServices.IAuthServices;
-using FishingApp.Core.Services.AuthServices;
+using System;
 using System.Runtime.InteropServices.JavaScript;
-using FishingApp.Core.Repositories.Interfaces;
-using FishingApp.Core.Repositories.Implementations;
-using FishingApp.Core.Services.FishServices.Interfaces;
-using FishingApp.Core.Services.FishServices;
-using FishingApp.WPF.Windows;
+using System.Windows;
 
 namespace FishingApp.WPF
 {
@@ -44,8 +46,10 @@ namespace FishingApp.WPF
 
                     services.AddScoped<IAuthService, AuthService>();
                     services.AddScoped<IFishService, FishService>();
+                    services.AddScoped<IUserService, UserService>();
 
-                    services.AddSingleton<MainWindow>();
+
+                    services.AddTransient<MainWindow>();
                     services.AddTransient<FishDexWindow>();
                 })
             .Build();
