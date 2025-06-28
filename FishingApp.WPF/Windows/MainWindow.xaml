@@ -4,16 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Fishing App" Height="360" Width="420"
-        Background="#FFF7F9FB"
+        Title="Fishing App - Ночная рыбалка"
+        Height="390"
+        Width="420"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FF0B0F2B" Offset="0.0"/>
+            <GradientStop Color="#FF1A2238" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
 
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="8,4"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="Foreground" Value="#EEE"/>
+            <Setter Property="BorderBrush" Value="#555"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -32,8 +41,9 @@
         <Style TargetType="PasswordBox">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="8,4"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="Foreground" Value="#EEE"/>
+            <Setter Property="BorderBrush" Value="#555"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -52,8 +62,8 @@
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#007ACC"/>
-            <Setter Property="BorderBrush" Value="#007ACC"/>
+            <Setter Property="Background" Value="#FF914D" />
+            <Setter Property="BorderBrush" Value="#FF914D"/>
             <Setter Property="Height" Value="35"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -71,14 +81,30 @@
             </Setter>
             <Setter Property="Margin" Value="0,20,0,0"/>
         </Style>
+
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="#EEE"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter ContentSource="Header"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid>
         <Border Margin="20"
                 Padding="10"
-                Background="White"
+                Background="#661A2238"
                 CornerRadius="10"
-                BorderBrush="#DDD"
+                BorderBrush="#444"
                 BorderThickness="1">
             <TabControl Background="Transparent"
                         BorderThickness="0"
@@ -86,10 +112,10 @@
                         Padding="10">
                 <TabItem Header="Вход">
                     <StackPanel Margin="20">
-                        <TextBlock Text="Имя пользователя" />
+                        <TextBlock Text="Имя пользователя" Foreground="#EEE"/>
                         <TextBox x:Name="LoginUsernameBox" Margin="0,5"/>
 
-                        <TextBlock Text="Пароль" Margin="0,10,0,0"/>
+                        <TextBlock Text="Пароль" Margin="0,10,0,0" Foreground="#EEE"/>
                         <PasswordBox x:Name="LoginPasswordBox" Margin="0,5"/>
 
                         <Button Content="Войти"
@@ -99,10 +125,10 @@
 
                 <TabItem Header="Регистрация">
                     <StackPanel Margin="20">
-                        <TextBlock Text="Имя пользователя" />
+                        <TextBlock Text="Имя пользователя" Foreground="#EEE"/>
                         <TextBox x:Name="RegisterUsernameBox" Margin="0,5"/>
 
-                        <TextBlock Text="Пароль" Margin="0,10,0,0"/>
+                        <TextBlock Text="Пароль" Margin="0,10,0,0" Foreground="#EEE"/>
                         <PasswordBox x:Name="RegisterPasswordBox" Margin="0,5"/>
 
                         <Button Content="Зарегистрироваться"

@@ -5,28 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FishingApp.WPF.Windows"
         mc:Ignorable="d"
-        Title="FishDex" Height="500" Width="820"
-        Background="#F6F9FB"
+        Title="FishDex" Height="560" Width="820"
         WindowStartupLocation="CenterScreen">
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#FF0B0F2B" Offset="0.0"/>
+            <GradientStop Color="#FF1A2238" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Window.Background>
 
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Foreground" Value="#333"/>
+            <Setter Property="Foreground" Value="#EEE"/>
         </Style>
 
         <Style TargetType="ComboBox">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="6,2"/>
-            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="Foreground" Value="#EEE"/>
+            <Setter Property="BorderBrush" Value="#555"/>
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
 
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#007ACC"/>
-            <Setter Property="BorderBrush" Value="#007ACC"/>
+            <Setter Property="Background" Value="#FF914D"/>
+            <Setter Property="BorderBrush" Value="#FF914D"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -46,26 +54,61 @@
 
         <Style TargetType="ListBox">
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="Foreground" Value="#EEE"/>
+            <Setter Property="BorderBrush" Value="#555"/>
         </Style>
 
         <Style TargetType="ListView">
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="Background" Value="#222"/>
+            <Setter Property="Foreground" Value="#EEE"/>
+            <Setter Property="BorderBrush" Value="#555"/>
+        </Style>
+
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="#333"/>
+            <Setter Property="Foreground" Value="#FF914D"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="#EEE"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="Bd"
+                        Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}">
+                            <ContentPresenter ContentSource="Header"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#FF914D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
     <Grid Margin="10">
-        <Border Background="White"
+        <Border Background="#661A2238"
                 Padding="10"
-                CornerRadius="10">
-            <Border.Effect>
-                <DropShadowEffect Color="Black" Opacity="0.2" BlurRadius="10" ShadowDepth="2"/>
-            </Border.Effect>
+                CornerRadius="10"
+                BorderBrush="#444"
+                BorderThickness="1">
+            <TabControl FontSize="14"
+                        Background="Transparent"
+                        BorderThickness="0">
 
-            <TabControl FontSize="14">
-
-                <TabItem Header="Рыбы" Height="25" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+                <TabItem Header="Рыбы">
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200"/>
@@ -76,22 +119,51 @@
                                  DisplayMemberPath="Name"
                                  SelectionChanged="FishListBox_SelectionChanged"
                                  Margin="0,0,10,0"/>
-
                         <StackPanel Grid.Column="1" Margin="10,0,0,0">
                             <Image x:Name="FishImage"
                                    Width="250"
-                                   Height="250"
+                                   Height="230"
                                    Stretch="Uniform"
-                                   Margin="0,0,0,10"/>
-                            <TextBlock x:Name="FishName"
-                                       FontWeight="Bold"
-                                       FontSize="20"
-                                       Margin="0,0,0,5"/>
-                            <TextBlock x:Name="FishReservoir"/>
-                            <TextBlock x:Name="FishWeight"/>
-                            <TextBlock x:Name="FishDescription"
-                                       TextWrapping="Wrap"
-                                       Margin="0,10,0,0"/>
+                                   HorizontalAlignment="Left"/>
+
+                            <Border
+                                    CornerRadius="5"
+                                    Padding="8"
+                                    Margin="0,0,0,5"
+                                    x:Name="FishName_Border">
+                                <TextBlock x:Name="FishName"
+                                           FontWeight="Bold"
+                                           FontSize="20"
+                                           Foreground="#EEE"/>
+                            </Border>
+
+                            <Border
+                                    CornerRadius="5"
+                                    Padding="8"
+                                    Margin="0,5,0,5"
+                                    x:Name="FishResoivoir_Border">
+                                <TextBlock x:Name="FishReservoir"
+                                           Foreground="#EEE"/>
+                            </Border>
+
+                            <Border 
+                                    CornerRadius="5"
+                                    Padding="8"
+                                    Margin="0,5,0,2"
+                                    x:Name="FishWeight_Border">
+                                <TextBlock x:Name="FishWeight"
+                                           Foreground="#EEE"/>
+                            </Border>
+
+                            <Border
+                                    CornerRadius="5"
+                                    Padding="8"
+                                    Margin="0,10,0,0"
+                                    x:Name="FishDiscription_Border">
+                                <TextBlock x:Name="FishDescription"
+                                           TextWrapping="Wrap"
+                                           Foreground="#EEE"/>
+                            </Border>
                         </StackPanel>
                     </Grid>
                 </TabItem>
@@ -121,11 +193,13 @@
 
                 <TabItem Header="История уловов">
                     <Grid Margin="10">
-                        <ListView x:Name="FishingHistoryListView">
+                        <ListView x:Name="FishingHistoryListView"
+                                  IsHitTestVisible="False"
+                                  Focusable="False">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Date}" Width="150"/>
-                                    <GridViewColumn Header="Рыбы" Width="400">
+                                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Date}" Width="250"/>
+                                    <GridViewColumn Header="Рыбы" Width="478">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <ItemsControl ItemsSource="{Binding Fishes}">
@@ -144,20 +218,20 @@
                     </Grid>
                 </TabItem>
 
-
                 <TabItem Header="Рейтинг">
                     <Grid Margin="10">
-                        <ListView x:Name="UserScoreListView">
+                        <ListView x:Name="UserScoreListView"
+                                  IsHitTestVisible="False"
+                                  Focusable="False">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                                    <GridViewColumn Header="Очки" DisplayMemberBinding="{Binding Score}" Width="100"/>
+                                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="250"/>
+                                    <GridViewColumn Header="Очки" DisplayMemberBinding="{Binding Score}" Width="478"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
                     </Grid>
                 </TabItem>
-
             </TabControl>
         </Border>
     </Grid>

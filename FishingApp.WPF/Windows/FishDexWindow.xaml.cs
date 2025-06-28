@@ -4,6 +4,7 @@ using FishingApp.Core.Services.UserServices.Interfaces;
 using FishingApp.Data.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -100,7 +101,12 @@ namespace FishingApp.WPF.Windows
         {
             if (FishListBox.SelectedItem is Fish fish && fish.Discription != null)
             {
-                FishName.Text = fish.Name;
+                FishName_Border.Background = new SolidColorBrush(Color.FromRgb(51, 51, 51));
+                FishResoivoir_Border.Background = new SolidColorBrush(Color.FromRgb(51, 51, 51));
+                FishWeight_Border.Background = new SolidColorBrush(Color.FromRgb(51, 51, 51));
+                FishDiscription_Border.Background = new SolidColorBrush(Color.FromRgb(51, 51, 51));
+
+                FishName.Text = $"Имя: {fish.Name}";
                 FishReservoir.Text = $"Водоём: {fish.Discription.Resirvoir}";
                 FishWeight.Text = $"Средний вес: {fish.Discription.Weight} кг";
                 FishDescription.Text = $"Описание: {fish.Discription.Text}";
@@ -116,6 +122,11 @@ namespace FishingApp.WPF.Windows
             }
             else
             {
+                FishName_Border.Background = new SolidColorBrush(Color.FromRgb(238, 238, 238));
+                FishResoivoir_Border.Background = new SolidColorBrush(Color.FromRgb(238, 238, 238));
+                FishWeight_Border.Background = new SolidColorBrush(Color.FromRgb(238, 238, 238));
+                FishDiscription_Border.Background = new SolidColorBrush(Color.FromRgb(238, 238, 238));
+
                 FishName.Text = "";
                 FishReservoir.Text = "";
                 FishWeight.Text = "";
@@ -135,6 +146,20 @@ namespace FishingApp.WPF.Windows
                 bitmap.EndInit();
                 bitmap.Freeze();
                 return bitmap;
+            }
+        }
+
+        public class StringToBackgroundConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                string text = value as string;
+                return string.IsNullOrEmpty(text) ? Brushes.Transparent : new SolidColorBrush(Color.FromRgb(51, 51, 51));
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
             }
         }
 
