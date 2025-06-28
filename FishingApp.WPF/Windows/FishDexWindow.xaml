@@ -5,52 +5,155 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FishingApp.WPF.Windows"
         mc:Ignorable="d"
-        Title="FishDexWindow" Height="450" Width="800">
+        Title="FishDex" Height="500" Width="820"
+        Background="#F6F9FB"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#333"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="6,2"/>
+            <Setter Property="BorderBrush" Value="#CCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#007ACC"/>
+            <Setter Property="BorderBrush" Value="#007ACC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ListBox">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#CCC"/>
+        </Style>
+
+        <Style TargetType="ListView">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#CCC"/>
+        </Style>
+    </Window.Resources>
+
     <Grid Margin="10">
-        <TabControl>
-            <TabItem Header="Рыбы">
-                <Grid Margin="10">
-                    <ListBox x:Name="FishListBox" DisplayMemberPath="Name" SelectionChanged="FishListBox_SelectionChanged"/>
-                    <StackPanel Margin="200,0,0,0">
-                        <TextBlock x:Name="FishName" FontWeight="Bold" FontSize="20"/>
-                        <TextBlock x:Name="FishReservoir"/>
-                        <TextBlock x:Name="FishWeight"/>
-                        <TextBlock x:Name="FishDescription" TextWrapping="Wrap" Margin="0,10,0,0"/>
+        <Border Background="White"
+                Padding="10"
+                CornerRadius="10">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" Opacity="0.2" BlurRadius="10" ShadowDepth="2"/>
+            </Border.Effect>
+
+            <TabControl FontSize="14">
+
+                <TabItem Header="Рыбы" Height="25" Margin="-2,-2,-2,0" VerticalAlignment="Top">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <ListBox x:Name="FishListBox"
+                                 DisplayMemberPath="Name"
+                                 SelectionChanged="FishListBox_SelectionChanged"
+                                 Margin="0,0,10,0"/>
+
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock x:Name="FishName"
+                                       FontWeight="Bold"
+                                       FontSize="20"
+                                       Margin="0,0,0,5"/>
+                            <TextBlock x:Name="FishReservoir"/>
+                            <TextBlock x:Name="FishWeight"/>
+                            <TextBlock x:Name="FishDescription"
+                                       TextWrapping="Wrap"
+                                       Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Добавить улов">
+                    <StackPanel Margin="20" Width="300">
+                        <ComboBox x:Name="FishComboBox"
+                                  DisplayMemberPath="Name"
+                                  Height="30"
+                                  Margin="0,0,0,10"/>
+
+                        <Button Content="Добавить в улов"
+                                Width="150"
+                                Margin="0,0,0,10"
+                                Click="AddFishToCatch_Click"/>
+
+                        <ListBox x:Name="CatchListBox"
+                                 DisplayMemberPath="Name"
+                                 Height="100"
+                                 Margin="0,0,0,10"/>
+
+                        <Button Content="Сохранить рыбалку"
+                                Width="200"
+                                Click="SaveFishing_Click"/>
                     </StackPanel>
-                </Grid>
-            </TabItem>
+                </TabItem>
 
-            <TabItem Header="Рейтинг">
-                <ListView x:Name="UserScoreListView">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="200"/>
-                            <GridViewColumn Header="Очки" DisplayMemberBinding="{Binding Score}" Width="100"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </TabItem>
+                <TabItem Header="История уловов">
+                    <Grid Margin="10">
+                        <ListView x:Name="FishingHistoryListView">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Date}" Width="150"/>
+                                    <GridViewColumn Header="Рыбы" Width="400">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ItemsControl ItemsSource="{Binding Fishes}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding Name}"/>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </TabItem>
 
-            <TabItem Header="Добавить улов">
-                <StackPanel Margin="10">
 
-                    <ComboBox x:Name="FishComboBox"
-                      DisplayMemberPath="Name"
-                      Width="200" Height="30" />
+                <TabItem Header="Рейтинг">
+                    <Grid Margin="10">
+                        <ListView x:Name="UserScoreListView">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                                    <GridViewColumn Header="Очки" DisplayMemberBinding="{Binding Score}" Width="100"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </TabItem>
 
-                    <Button Content="Добавить в улов"
-                    Click="AddFishToCatch_Click"
-                    Margin="0,5" Width="150" />
-
-                    <ListBox x:Name="CatchListBox"
-                     DisplayMemberPath="Name"
-                     Height="100" />
-
-                    <Button Content="Сохранить рыбалку"
-                    Click="SaveFishing_Click"
-                    Margin="0,10" Width="200" />
-                </StackPanel>
-            </TabItem>
-        </TabControl>
+            </TabControl>
+        </Border>
     </Grid>
 </Window>

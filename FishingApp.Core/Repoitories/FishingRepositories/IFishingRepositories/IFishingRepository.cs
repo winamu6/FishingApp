@@ -10,6 +10,7 @@ namespace FishingApp.Core.Repoitories.FishingRepositories.IFishingRepositories
     public interface IFishingRepository
     {
         Task AddFishingAsync(Fishing fishing);
+        Task<List<Fishing>> GetFishingHistoryAsync(int userId);
     }
 
 }

@@ -42,10 +42,17 @@ namespace FishingApp.WPF.Windows
         private async void FishDexWindow_Loaded(object sender, RoutedEventArgs e)
         {
             var fishList = await _fishService.GetAllFishAsync();
+            if (fishList == null || fishList.Count == 0)
+            {
+                MessageBox.Show("Рыбы не найдены!");
+            }
             FishComboBox.ItemsSource = fishList;
 
+            await LoadFish();
             await LoadUsers();
+            await LoadFishingHistory();
         }
+
 
         private void AddFishToCatch_Click(object sender, RoutedEventArgs e)
         {
@@ -72,19 +79,21 @@ namespace FishingApp.WPF.Windows
             CatchListBox.Items.Clear();
             await LoadUsers();
         }
-
         private async Task LoadFish()
         {
             var fishList = await _fishService.GetAllFishAsync();
             FishListBox.ItemsSource = fishList;
         }
-
         private async Task LoadUsers()
         {
             var userList = await _userService.GetUsersByScoreAsync();
             UserScoreListView.ItemsSource = userList;
         }
-
+        private async Task LoadFishingHistory()
+        {
+            var history = await _fishingService.GetFishingHistoryAsync(_currentUser.Id);
+            FishingHistoryListView.ItemsSource = history;
+        }
         private void FishListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (FishListBox.SelectedItem is Fish fish && fish.Discription != null)

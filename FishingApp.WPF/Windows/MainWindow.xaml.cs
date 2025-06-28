@@ -1,7 +1,11 @@
 ﻿using FishingApp.Core.Services.AuthServices.IAuthServices;
+using FishingApp.Core.Services.FishingServices;
 using FishingApp.Core.Services.FishingServices.IFishingServices;
+using FishingApp.Core.Services.FishServices;
 using FishingApp.Core.Services.FishServices.Interfaces;
+using FishingApp.Core.Services.UserServices.Implementations;
 using FishingApp.Core.Services.UserServices.Interfaces;
+using FishingApp.Data.Models.Entities;
 using FishingApp.WPF.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
@@ -56,12 +60,18 @@ namespace FishingApp.WPF
         {
             var username = RegisterUsernameBox.Text.Trim();
             var password = RegisterPasswordBox.Password;
+            var user = await _authService.LoginAsync(username, password);
 
             var success = await _authService.RegisterAsync(username, password);
             if (success)
             {
                 MessageBox.Show("Регистрация прошла успешно!", "Успех");
-                var fishDexWindow = App.Services.GetRequiredService<FishDexWindow>();
+
+                var fishService = App.Services.GetRequiredService<IFishService>();
+                var userService = App.Services.GetRequiredService<IUserService>();
+                var fishingService = App.Services.GetRequiredService<IFishingService>();
+
+                var fishDexWindow = new FishDexWindow(fishService, userService, fishingService, user);
                 fishDexWindow.Show();
                 this.Close();
             }

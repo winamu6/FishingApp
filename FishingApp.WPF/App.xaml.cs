@@ -54,6 +54,7 @@ namespace FishingApp.WPF
                     services.AddScoped<IFishingService, FishingService>();
 
                     services.AddTransient<MainWindow>();
+                    services.AddScoped<FishDexWindow>();
                 })
             .Build();
 

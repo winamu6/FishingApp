@@ -34,6 +34,12 @@ namespace FishingApp.Core.Services.FishingServices
             user.Score += catchList.Count * 1000;
             await _userRepo.UpdateUserAsync(user);
         }
+
+        public async Task<List<Fishing>> GetFishingHistoryAsync(int userId)
+        {
+            return await _fishingRepo.GetFishingHistoryAsync(userId);
+        }
+
     }
 
 }

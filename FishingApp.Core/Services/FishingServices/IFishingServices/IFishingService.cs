@@ -10,6 +10,7 @@ namespace FishingApp.Core.Services.FishingServices.IFishingServices
     public interface IFishingService
     {
         Task SaveFishingAsync(User user, List<Fish> catchList);
+        Task<List<Fishing>> GetFishingHistoryAsync(int userId);
     }
 
 }
