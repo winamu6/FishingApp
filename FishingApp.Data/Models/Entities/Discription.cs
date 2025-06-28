@@ -16,5 +16,7 @@ namespace FishingApp.Data.Models.Entities
         public string Text { get; set; } = null!;
         public string Resirvoir { get; set; } = null!;
         public double Weight { get; set; }
+
+        public byte[]? Image { get; set; }
     }
 }

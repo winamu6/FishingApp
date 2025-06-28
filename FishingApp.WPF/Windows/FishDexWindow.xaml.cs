@@ -4,6 +4,7 @@ using FishingApp.Core.Services.UserServices.Interfaces;
 using FishingApp.Data.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +79,7 @@ namespace FishingApp.WPF.Windows
             _currentCatch.Clear();
             CatchListBox.Items.Clear();
             await LoadUsers();
+            await LoadFishingHistory();
         }
         private async Task LoadFish()
         {
@@ -102,7 +104,39 @@ namespace FishingApp.WPF.Windows
                 FishReservoir.Text = $"Водоём: {fish.Discription.Resirvoir}";
                 FishWeight.Text = $"Средний вес: {fish.Discription.Weight} кг";
                 FishDescription.Text = $"Описание: {fish.Discription.Text}";
+
+                if (fish.Discription.Image != null && fish.Discription.Image.Length > 0)
+                {
+                    FishImage.Source = LoadImage(fish.Discription.Image);
+                }
+                else
+                {
+                    FishImage.Source = null;
+                }
+            }
+            else
+            {
+                FishName.Text = "";
+                FishReservoir.Text = "";
+                FishWeight.Text = "";
+                FishDescription.Text = "";
+                FishImage.Source = null;
             }
         }
+
+        private BitmapImage LoadImage(byte[] imageData)
+        {
+            using (var ms = new MemoryStream(imageData))
+            {
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = ms;
+                bitmap.EndInit();
+                bitmap.Freeze();
+                return bitmap;
+            }
+        }
+
     }
 }

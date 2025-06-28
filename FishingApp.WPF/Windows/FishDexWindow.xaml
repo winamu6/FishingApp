@@ -78,6 +78,11 @@
                                  Margin="0,0,10,0"/>
 
                         <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <Image x:Name="FishImage"
+                                   Width="250"
+                                   Height="250"
+                                   Stretch="Uniform"
+                                   Margin="0,0,0,10"/>
                             <TextBlock x:Name="FishName"
                                        FontWeight="Bold"
                                        FontSize="20"
