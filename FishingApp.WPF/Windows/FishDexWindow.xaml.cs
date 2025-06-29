@@ -163,5 +163,10 @@ namespace FishingApp.WPF.Windows
             }
         }
 
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
+        {
+            var profileWindow = new EditProfileWindow(_userService, _currentUser);
+            profileWindow.ShowDialog();
+        }
     }
 }

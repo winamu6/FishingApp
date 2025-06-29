@@ -1,6 +1,7 @@
 ﻿using FishingApp.Core.Repoitories.UserRepositories.IUserRepositories;
 using FishingApp.Core.Services.UserServices.Interfaces;
 using FishingApp.Data.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace FishingApp.Core.Services.UserServices.Implementations
 {
@@ -14,5 +15,10 @@ namespace FishingApp.Core.Services.UserServices.Implementations
         }
 
         public Task<List<User>> GetUsersByScoreAsync() => _userRepository.GetAllByScoreAsync();
+        public async Task UpdateUserAsync(User user)
+        {
+            await _userRepository.UpdateUserAsync(user);
+        }
+
     }
 }

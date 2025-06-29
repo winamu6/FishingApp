@@ -7,5 +7,7 @@ namespace FishingApp.Core.Services.UserServices.Interfaces
     public interface IUserService
     {
         Task<List<User>> GetUsersByScoreAsync();
+        Task UpdateUserAsync(User user);
+
     }
 }

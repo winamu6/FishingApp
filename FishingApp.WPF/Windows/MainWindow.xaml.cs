@@ -60,24 +60,33 @@ namespace FishingApp.WPF
         {
             var username = RegisterUsernameBox.Text.Trim();
             var password = RegisterPasswordBox.Password;
-            var user = await _authService.LoginAsync(username, password);
-
-            var success = await _authService.RegisterAsync(username, password);
-            if (success)
+            var password2 = RegisterPasswordBox2.Password;
+            
+            if (password == password2)
             {
-                MessageBox.Show("Регистрация прошла успешно!", "Успех");
+                var user = await _authService.LoginAsync(username, password);
 
-                var fishService = App.Services.GetRequiredService<IFishService>();
-                var userService = App.Services.GetRequiredService<IUserService>();
-                var fishingService = App.Services.GetRequiredService<IFishingService>();
+                var success = await _authService.RegisterAsync(username, password);
+                if (success)
+                {
+                    MessageBox.Show("Регистрация прошла успешно!", "Успех");
 
-                var fishDexWindow = new FishDexWindow(fishService, userService, fishingService, user);
-                fishDexWindow.Show();
-                this.Close();
+                    var fishService = App.Services.GetRequiredService<IFishService>();
+                    var userService = App.Services.GetRequiredService<IUserService>();
+                    var fishingService = App.Services.GetRequiredService<IFishingService>();
+
+                    var fishDexWindow = new FishDexWindow(fishService, userService, fishingService, user);
+                    fishDexWindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Пользователь с таким именем уже существует.", "Ошибка регистрации");
+                }
             }
             else
             {
-                MessageBox.Show("Пользователь с таким именем уже существует.", "Ошибка регистрации");
+                MessageBox.Show("Пароли не совпадают", "Ошибка регистрации");
             }
         }
     }
